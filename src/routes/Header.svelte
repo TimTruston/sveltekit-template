@@ -11,9 +11,9 @@
     }
 </script>
 
-<header class="flex h-[70px] w-full justify-between">
-	<NavigationMenu.Root class="flex justify-self-start" value={activeUrl}>
-        <NavigationMenu.List class="flex">
+<header class="flex h-[70px] w-full">
+	<NavigationMenu.Root class="flex max-w-none z-10" value={activeUrl} viewport={false}>
+        <NavigationMenu.List class="justify-between w-screen">
                         
             <div class="flex justify-self-start">
                 <NavigationMenu.Item class={cn("justify-self-start")}>
@@ -58,12 +58,8 @@
                     </NavigationMenu.Item>
                 {/if}
             </div>
-        </NavigationMenu.List>
-    </NavigationMenu.Root>
 
-    <div class="flex justify-self-end relative">
-        <NavigationMenu.Root value={activeUrl}>
-            <NavigationMenu.List class={cn("bg-blue-300 items-stretch")}>
+            <div class="flex justify-self-end relative">
                 <NavigationMenu.Item class={cn("flex left-0")}>
                     <NavigationMenu.Trigger class={cn("bg-amber-200 hover:bg-amber-300 h-full")}>First</NavigationMenu.Trigger>
                     <NavigationMenu.Content class={cn("bg-red-300")}>
@@ -81,10 +77,7 @@
                         </ul>
                     </NavigationMenu.Content>
                 </NavigationMenu.Item>
-            </NavigationMenu.List>
-        </NavigationMenu.Root>
-        <NavigationMenu.Root value={activeUrl}>
-            <NavigationMenu.List class={cn("items-stretch")}>
+
                 <NavigationMenu.Item class={cn("flex left-0 ")}>
                     <NavigationMenu.Trigger class={cn("bg-amber-200 hover:bg-amber-300 h-full")}>Second</NavigationMenu.Trigger>
                     <NavigationMenu.Content class={cn("bg-red-300")}>
@@ -148,9 +141,10 @@
                         </NavigationMenu.Link>
                     </NavigationMenu.Item> -->
                 {/if}
-            </NavigationMenu.List>
-        </NavigationMenu.Root>
-	</div>
+            </div>
+        </NavigationMenu.List>
+    </NavigationMenu.Root>
+	
 </header>
 
 <div class="w-full h-[80px] text-center printable">
