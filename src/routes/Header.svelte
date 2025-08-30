@@ -4,13 +4,16 @@
 	import { cn } from '$lib/utils';
 
 	let activeUrl = $state(page.url.pathname);
-	let loggedIn = true;
+	let loggedIn = $state(true);
 	let isAdmin = $derived(loggedIn && false);
+    let logInOut = function(){
+        loggedIn = !loggedIn
+    }
 </script>
 
-<header class="flex h-[70px] w-full">
-	<NavigationMenu.Root class="flex max-w-none w-full" value={activeUrl}>
-        <NavigationMenu.List class="flex w-screen justify-between">
+<header class="flex h-[70px] w-full justify-between">
+	<NavigationMenu.Root class="flex justify-self-start" value={activeUrl}>
+        <NavigationMenu.List class="flex">
                         
             <div class="flex justify-self-start">
                 <NavigationMenu.Item class={cn("justify-self-start")}>
@@ -55,15 +58,16 @@
                     </NavigationMenu.Item>
                 {/if}
             </div>
+        </NavigationMenu.List>
+    </NavigationMenu.Root>
 
-            <div class="flex justify-self-end relative">
-                <NavigationMenu.Item class={cn("flex relative left-0 hover:bg-accent nav-container")}>
-                    <NavigationMenu.Trigger class={cn("h-full bg-transparent")}>Introduction</NavigationMenu.Trigger>
-                    <!-- <span class="bg-blue-300 p-3 relative left-0 top-15 z-10">
-                        testing
-                    </span> -->
-                    <NavigationMenu.Content class={cn("!relative bg-red-300")}>
-                        <ul class="grid w-[350px] gap-2 p-4 !relative left-5 bg-green-300">
+    <div class="flex justify-self-end relative">
+        <NavigationMenu.Root value={activeUrl}>
+            <NavigationMenu.List class={cn("bg-blue-300 items-stretch")}>
+                <NavigationMenu.Item class={cn("flex left-0")}>
+                    <NavigationMenu.Trigger class={cn("bg-amber-200 hover:bg-amber-300 h-full")}>First</NavigationMenu.Trigger>
+                    <NavigationMenu.Content class={cn("bg-red-300")}>
+                        <ul class="grid w-[200px] bg-green-300">
                             <li>
                                 <NavigationMenu.Link>
                                     <a href="/about" target="_blank" class="block p-2 hover:bg-gray-100">Sub 1</a>
@@ -72,6 +76,27 @@
                             <li>
                                 <NavigationMenu.Link>
                                     <a href="/about" target="_blank" class="block p-2 hover:bg-gray-100">Sub 2</a>
+                                </NavigationMenu.Link>
+                            </li>
+                        </ul>
+                    </NavigationMenu.Content>
+                </NavigationMenu.Item>
+            </NavigationMenu.List>
+        </NavigationMenu.Root>
+        <NavigationMenu.Root value={activeUrl}>
+            <NavigationMenu.List class={cn("items-stretch")}>
+                <NavigationMenu.Item class={cn("flex left-0 ")}>
+                    <NavigationMenu.Trigger class={cn("bg-amber-200 hover:bg-amber-300 h-full")}>Second</NavigationMenu.Trigger>
+                    <NavigationMenu.Content class={cn("bg-red-300")}>
+                        <ul class="grid w-[200px] bg-green-300">
+                            <li>
+                                <NavigationMenu.Link>
+                                    <a href="/about" target="_blank" class="block p-2 hover:bg-gray-100">Sub 3</a>
+                                </NavigationMenu.Link>
+                            </li>
+                            <li>
+                                <NavigationMenu.Link>
+                                    <a href="/about" target="_blank" class="block p-2 hover:bg-gray-100">Sub 4</a>
                                 </NavigationMenu.Link>
                             </li>
                         </ul>
@@ -91,16 +116,18 @@
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
                         <NavigationMenu.Link>
-                            <a href="/logout" data-sveltekit-preload-data="off" class="flex p-3 hover:bg-gray-100">Log out</a>
+                            <!-- <a href="/logout" data-sveltekit-preload-data="off" class="flex p-3 hover:bg-gray-100">Log out</a> -->
+                            <button onclick={logInOut} class="flex p-3 hover:bg-gray-100">Log Out</button>
                         </NavigationMenu.Link>
                     </NavigationMenu.Item>
-                {:else}
+                    {:else}
                     <NavigationMenu.Item>
                         <NavigationMenu.Link>
-                            <a href="/login" class="flex p-3 hover:bg-gray-100">Log in</a>
+                            <!-- <a href="/login" class="flex p-3 hover:bg-gray-100">Log In</a> -->
+                            <button onclick={logInOut} class="flex p-3 hover:bg-gray-100">Log In</button>
                         </NavigationMenu.Link>
                     </NavigationMenu.Item>
-                    <NavigationMenu.Item>
+                    <!-- <NavigationMenu.Item>
                         <NavigationMenu.Link>
                             <a href="/register" class="flex p-3 hover:bg-gray-100">Register</a>
                         </NavigationMenu.Link>
@@ -119,13 +146,11 @@
                         <NavigationMenu.Link>
                             <a href="/contact" class="flex p-3 hover:bg-gray-100">Contact Us</a>
                         </NavigationMenu.Link>
-                    </NavigationMenu.Item>
+                    </NavigationMenu.Item> -->
                 {/if}
-            </div>
-            
-        </NavigationMenu.List>
-    </NavigationMenu.Root>
-	
+            </NavigationMenu.List>
+        </NavigationMenu.Root>
+	</div>
 </header>
 
 <div class="w-full h-[80px] text-center printable">
