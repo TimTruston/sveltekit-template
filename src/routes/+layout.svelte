@@ -9,7 +9,7 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<div class="app bg-gray-50 text-gray-800 w-full min-h-screen">
+<div class="app bg-background text-foreground w-full min-h-screen">
 <Header/>
 {@render children?.()}
 </div>

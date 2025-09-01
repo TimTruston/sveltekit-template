@@ -1,96 +1,73 @@
-<script lang="ts">
+ <script lang="ts">
 	import { page } from '$app/state';
 	import * as NavigationMenu from "$lib/components/ui/navigation-menu/index.js";
 	import { cn } from '$lib/utils';
 
 	let activeUrl = $state(page.url.pathname);
 	let loggedIn = $state(true);
-	let isAdmin = $derived(loggedIn && false);
-    let logInOut = function(){
+	let isAdmin = $derived(loggedIn && true);
+    let logInOut = function(e:Event){
+        e.preventDefault()
         loggedIn = !loggedIn
     }
 </script>
 
 <header class="flex h-[70px] w-full">
-	<NavigationMenu.Root class="flex max-w-none z-10" value={activeUrl} viewport={false}>
+	<NavigationMenu.Root class="max-w-none z-10" value={activeUrl} viewport={false}>
         <NavigationMenu.List class="justify-between w-screen">
-                        
-            <div class="flex justify-self-start">
+            
+            <div class="flex justify-self-start h-full">
                 <NavigationMenu.Item class={cn("justify-self-start")}>
-                    <NavigationMenu.Link>
-                        <a href="/" class="flex p-3 hover:bg-gray-100">Logo</a>
-                    </NavigationMenu.Link>
+                    <NavigationMenu.Link href="/">Logo</NavigationMenu.Link>
                 </NavigationMenu.Item>
 
                 {#if isAdmin}
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link>
-                            <a href="/admin/users" class="flex p-3 hover:bg-gray-100">Users</a>
-                        </NavigationMenu.Link>
+                        <NavigationMenu.Link href="/admin/users">Users</NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link>
-                            <a href="/admin/projects" class="flex p-3 hover:bg-gray-100">Projects</a>
-                        </NavigationMenu.Link>
+                        <NavigationMenu.Link href="/admin/projects">Projects</NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link>
-                            <a href="/admin/subscriptions" class="flex p-3 hover:bg-gray-100">Subscriptions</a>
-                        </NavigationMenu.Link>
+                        <NavigationMenu.Link href="/admin/subscriptions">Subscriptions</NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link>
-                            <a href="javascript:void(0)" class="flex p-3 hover:bg-gray-100">Plans</a>
-                        </NavigationMenu.Link>
+                        <NavigationMenu.Link href="/admin/plans">Plans</NavigationMenu.Link>
                     </NavigationMenu.Item>
                 {:else if loggedIn}
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link>
-                            <a href="/projects" class={cn("flex p-3 hover:bg-gray-100", activeUrl == '/projects' && "underline")}>Projects</a>
-                        </NavigationMenu.Link>
+                        <NavigationMenu.Link href="/projects" class={activeUrl == '/projects' && "underline"}>Projects</NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link>
-                            <a href="/subscriptions" class="flex p-3">
-                                Subscription
-                            </a>
-                        </NavigationMenu.Link>
+                        <NavigationMenu.Link href="/subscriptions" class={activeUrl == '/subscriptions' && "underline"}>Subscription</NavigationMenu.Link>
                     </NavigationMenu.Item>
                 {/if}
             </div>
 
-            <div class="flex justify-self-end relative">
-                <NavigationMenu.Item class={cn("flex left-0")}>
-                    <NavigationMenu.Trigger class={cn("bg-amber-200 hover:bg-amber-300 h-full")}>First</NavigationMenu.Trigger>
-                    <NavigationMenu.Content class={cn("bg-red-300")}>
-                        <ul class="grid w-[200px] bg-green-300">
+            <div class="flex justify-self-end h-full">
+                <NavigationMenu.Item>
+                    <NavigationMenu.Trigger class="bg-transparent">First</NavigationMenu.Trigger>
+                    <NavigationMenu.Content>
+                        <ul class="w-[200px]">
                             <li>
-                                <NavigationMenu.Link>
-                                    <a href="/about" target="_blank" class="block p-2 hover:bg-gray-100">Sub 1</a>
-                                </NavigationMenu.Link>
+                                <NavigationMenu.Link href="/about" target="_blank" class="sub-nav">Sub 1</NavigationMenu.Link>
                             </li>
                             <li>
-                                <NavigationMenu.Link>
-                                    <a href="/about" target="_blank" class="block p-2 hover:bg-gray-100">Sub 2</a>
-                                </NavigationMenu.Link>
+                                <NavigationMenu.Link href="/about" target="_blank" class="sub-nav">Sub 2</NavigationMenu.Link>
                             </li>
                         </ul>
                     </NavigationMenu.Content>
                 </NavigationMenu.Item>
 
-                <NavigationMenu.Item class={cn("flex left-0 ")}>
-                    <NavigationMenu.Trigger class={cn("bg-amber-200 hover:bg-amber-300 h-full")}>Second</NavigationMenu.Trigger>
-                    <NavigationMenu.Content class={cn("bg-red-300")}>
-                        <ul class="grid w-[200px] bg-green-300">
+                <NavigationMenu.Item>
+                    <NavigationMenu.Trigger class="bg-transparent">Second</NavigationMenu.Trigger>
+                    <NavigationMenu.Content>
+                        <ul class="w-[200px]">
                             <li>
-                                <NavigationMenu.Link>
-                                    <a href="/about" target="_blank" class="block p-2 hover:bg-gray-100">Sub 3</a>
-                                </NavigationMenu.Link>
+                                <NavigationMenu.Link href="/about" target="_blank" class="sub-nav">Sub 3</NavigationMenu.Link>
                             </li>
                             <li>
-                                <NavigationMenu.Link>
-                                    <a href="/about" target="_blank" class="block p-2 hover:bg-gray-100">Sub 4</a>
-                                </NavigationMenu.Link>
+                                <NavigationMenu.Link href="/about" target="_blank" class="sub-nav">Sub 4</NavigationMenu.Link>
                             </li>
                         </ul>
                     </NavigationMenu.Content>
@@ -98,62 +75,56 @@
 
                 {#if loggedIn}
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link>
-                            <a href={isAdmin ? "javascript:void(0)" : "/settings"} class="flex p-3 hover:bg-gray-100">Settings</a>
-                        </NavigationMenu.Link>
+                        <NavigationMenu.Link href={isAdmin ? "javascript:void(0)" : "/settings"}>Settings</NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link>
-                            <a href="/contact" class="flex p-3 hover:bg-gray-100">Contact Us</a>
-                        </NavigationMenu.Link>
+                        <NavigationMenu.Link href="/contact">Contact Us</NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link>
-                            <!-- <a href="/logout" data-sveltekit-preload-data="off" class="flex p-3 hover:bg-gray-100">Log out</a> -->
-                            <button onclick={logInOut} class="flex p-3 hover:bg-gray-100">Log Out</button>
-                        </NavigationMenu.Link>
+                        <NavigationMenu.Link onclick={logInOut} href="/logout" data-sveltekit-preload-data="off">Log out</NavigationMenu.Link>
                     </NavigationMenu.Item>
                     {:else}
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link>
-                            <!-- <a href="/login" class="flex p-3 hover:bg-gray-100">Log In</a> -->
-                            <button onclick={logInOut} class="flex p-3 hover:bg-gray-100">Log In</button>
-                        </NavigationMenu.Link>
+                        <NavigationMenu.Link href="/login" onclick={logInOut}>Log In</NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <!-- <NavigationMenu.Item>
-                        <NavigationMenu.Link>
-                            <a href="/register" class="flex p-3 hover:bg-gray-100">Register</a>
-                        </NavigationMenu.Link>
+                        <NavigationMenu.Link href="/register">Register</NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link>
-                            <a href="/pricing" class="flex p-3 hover:bg-gray-100">Pricing</a>
-                        </NavigationMenu.Link>
+                        <NavigationMenu.Link href="/pricing">Pricing</NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link>
-                            <a href="/about" class="flex p-3 hover:bg-gray-100">About</a>
-                        </NavigationMenu.Link>
+                        <NavigationMenu.Link href="/about">About</NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link>
-                            <a href="/contact" class="flex p-3 hover:bg-gray-100">Contact Us</a>
-                        </NavigationMenu.Link>
+                        <NavigationMenu.Link href="/contact">Contact Us</NavigationMenu.Link>
                     </NavigationMenu.Item> -->
                 {/if}
             </div>
+
         </NavigationMenu.List>
     </NavigationMenu.Root>
-	
 </header>
 
 <div class="w-full h-[80px] text-center printable">
-    <div class="relative w-full h-[80px] mt-0 bg-primary z-1" style:--tag="logo-bar"></div>
+    <div class="relative w-full h-[80px] mt-0 bg-foreground z-1" style:--tag="logo-bar"></div>
 </div>
 
 <style>
-:global(li.nav-container > span) {
-    position: absolute !important;
-    left: 0 !important;
-}
+    :global(nav > div),
+    :global(nav ul),
+    :global(nav ul li),
+    :global(nav ul li > a),
+    :global(nav ul li > button)
+    {
+        height: 100%;
+        border-radius: 0;
+    }
+    :global(nav .sub-nav)
+    {
+        height: 50px;
+    }
+    :global(nav a[data-navigation-menu-link]){
+        justify-content: center;
+    }
 </style>

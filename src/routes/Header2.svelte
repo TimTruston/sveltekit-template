@@ -82,7 +82,7 @@
         </li>
     {/snippet}
     
-    <NavigationMenu.Root viewport={false}>
+    <NavigationMenu.Root viewport={false} class="h-[70px]">
         <NavigationMenu.List>
             <NavigationMenu.Item>
                 <NavigationMenu.Trigger>Home</NavigationMenu.Trigger>
@@ -218,3 +218,19 @@
         </NavigationMenu.List>
     </NavigationMenu.Root>
 </header>
+
+
+<style>
+    :global(nav ul),
+    :global(nav ul li),
+    :global(nav ul li > a),
+    :global(nav ul li > button)
+    {
+        height: 100%;
+        border-radius: 0;
+    }
+    
+    :global(nav a[data-navigation-menu-link]){
+        justify-content: center;
+    }
+</style>
