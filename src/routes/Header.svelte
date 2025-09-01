@@ -3,17 +3,22 @@
 	import * as NavigationMenu from "$lib/components/ui/navigation-menu/index.js";
 	import { cn } from '$lib/utils';
 
-	let activeUrl = $state(page.url.pathname);
+	let currentPath = $state(page.url.pathname);
 	let loggedIn = $state(true);
-	let isAdmin = $derived(loggedIn && true);
+	let isAdmin = $derived(loggedIn && false);
     let logInOut = function(e:Event){
         e.preventDefault()
         loggedIn = !loggedIn
     }
+    let underline = function(path:string){
+        if(path == currentPath){
+            return 'underline'
+        }
+    }
 </script>
 
 <header class="flex h-[70px] w-full">
-	<NavigationMenu.Root class="max-w-none z-10" value={activeUrl} viewport={false}>
+	<NavigationMenu.Root class="max-w-none z-10" value={currentPath} viewport={false}>
         <NavigationMenu.List class="justify-between w-screen">
             
             <div class="flex justify-self-start h-full">
@@ -36,10 +41,10 @@
                     </NavigationMenu.Item>
                 {:else if loggedIn}
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link href="/projects" class={activeUrl == '/projects' && "underline"}>Projects</NavigationMenu.Link>
+                        <NavigationMenu.Link href="/projects" class={underline("/projects")}>Projects</NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link href="/subscriptions" class={activeUrl == '/subscriptions' && "underline"}>Subscription</NavigationMenu.Link>
+                        <NavigationMenu.Link href="/subscriptions" class={underline("/subscriptions")}>Subscriptions</NavigationMenu.Link>
                     </NavigationMenu.Item>
                 {/if}
             </div>
@@ -75,10 +80,10 @@
 
                 {#if loggedIn}
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link href={isAdmin ? "javascript:void(0)" : "/settings"}>Settings</NavigationMenu.Link>
+                        <NavigationMenu.Link href="/settings" class={underline('/settings')}>Settings</NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
-                        <NavigationMenu.Link href="/contact">Contact Us</NavigationMenu.Link>
+                        <NavigationMenu.Link href="/contact" class={underline('/contact')}>Contact Us</NavigationMenu.Link>
                     </NavigationMenu.Item>
                     <NavigationMenu.Item>
                         <NavigationMenu.Link onclick={logInOut} href="/logout" data-sveltekit-preload-data="off">Log out</NavigationMenu.Link>
